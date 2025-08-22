@@ -1,0 +1,27 @@
+<header class="px-4 sm:px-6 lg:px-8">
+  <div class="flex items-center justify-between border-b border-zinc-100 py-3 text-sm">
+    <div class="flex items-center gap-4">
+      <a href="/">
+        <h1 class="text-lg font-semibold leading-8 text-zinc-800">FormWang</h1>
+      </a>
+    </div>
+    <div class="flex items-center gap-4 font-semibold leading-6 text-zinc-900">
+      <%= if assigns[:current_user] do %>
+        <span class="text-sm">欢迎，<%= @current_user.name %></span>
+        <.link href={~p"/users/log_out"} method="delete" class="hover:text-zinc-700">
+          退出登录
+        </.link>
+      <% else %>
+        <.link href={~p"/users/log_in"} class="hover:text-zinc-700">
+          登录
+        </.link>
+      <% end %>
+    </div>
+  </div>
+</header>
+<main class="px-4 py-20 sm:px-6 lg:px-8">
+  <div class="mx-auto max-w-2xl">
+    <.flash_group flash={@flash} />
+    <%= @inner_content %>
+  </div>
+</main>

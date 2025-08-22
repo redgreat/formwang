@@ -1,0 +1,28 @@
+<.header>
+  新建表单
+  <:subtitle>创建一个新的表单</:subtitle>
+</.header>
+
+<.simple_form :let={f} for={@changeset} action={~p"/admin/forms"}>
+  <.error :if={@changeset.action}>
+    表单中有错误，请检查下面的字段。
+  </.error>
+  
+  <.input field={f[:title]} type="text" label="表单标题" required />
+  <.input field={f[:description]} type="textarea" label="表单描述" />
+  <.input field={f[:slug]} type="text" label="URL Slug" placeholder="my-form" />
+  
+  <.input 
+    field={f[:status]} 
+    type="select" 
+    label="状态" 
+    options={[{"草稿", "draft"}, {"已发布", "published"}]} 
+  />
+  
+  <:actions>
+    <.button>创建表单</.button>
+    <.link href={~p"/admin/forms"} class="ml-3">
+      <.button type="button" class="bg-gray-600 hover:bg-gray-700">取消</.button>
+    </.link>
+  </:actions>
+</.simple_form>

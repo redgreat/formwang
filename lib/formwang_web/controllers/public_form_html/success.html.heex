@@ -1,0 +1,41 @@
+<div class="min-h-screen bg-gray-50 flex items-center justify-center py-4 md:py-8">
+  <div class="max-w-md mx-auto px-2 md:px-4">
+    <div class="bg-white rounded-lg shadow-sm p-4 md:p-8 text-center form-container">
+      <!-- 成功图标 -->
+      <div class="mx-auto flex items-center justify-center h-12 w-12 md:h-16 md:w-16 rounded-full bg-green-100 mb-4 md:mb-6">
+        <svg class="h-6 w-6 md:h-8 md:w-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+      </div>
+      
+      <!-- 成功消息 -->
+      <h1 class="text-xl md:text-2xl font-bold text-gray-900 mb-3 md:mb-4">提交成功！</h1>
+      <p class="text-gray-600 mb-6 md:mb-8 text-sm md:text-base">
+        感谢您填写「<%= @form.title %>」表单，我们已收到您的信息。
+      </p>
+      
+      <!-- 操作按钮 -->
+      <div class="space-y-3 md:space-y-4">
+        <a
+          href={~p"/forms/#{@form.slug}"}
+          class="submit-btn-mobile touch-friendly no-zoom text-center"
+        >
+          重新填写
+        </a>
+        <div>
+          <a
+            href="/"
+            class="text-gray-500 hover:text-gray-700 touch-friendly no-zoom"
+          >
+            返回首页
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 页脚 -->
+    <div class="text-center mt-8 text-sm text-gray-500">
+      <p>Powered by FormWang</p>
+    </div>
+  </div>
+</div>

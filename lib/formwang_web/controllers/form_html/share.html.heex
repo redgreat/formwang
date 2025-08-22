@@ -1,0 +1,118 @@
+<div class="max-w-4xl mx-auto px-2 md:px-4 py-4 md:py-8">
+  <div class="bg-white rounded-lg shadow-sm p-4 md:p-8 form-container">
+    <h1 class="text-xl md:text-2xl font-bold text-gray-900 mb-4 md:mb-6">分享表单</h1>
+    
+    <div class="space-y-6 md:space-y-8">
+      <!-- 公开链接 -->
+      <div class="border rounded-lg p-4 md:p-6">
+        <h2 class="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4">公开链接</h2>
+        <p class="text-gray-600 text-sm mb-4">任何人都可以通过此链接访问表单</p>
+        
+        <div class="flex flex-col md:flex-row md:items-center space-y-2 md:space-y-0 md:space-x-4 mb-4">
+          <input
+            type="text"
+            value={@public_url}
+            readonly
+            class="flex-1 px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-sm touch-friendly"
+          />
+          <button
+            onclick="copyToClipboard(this, '<%= @public_url %>')"
+            class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm touch-friendly no-zoom"
+          >
+            复制链接
+          </button>
+        </div>
+        
+        <div class="flex justify-center">
+          <div id="public-qr" class="qr-code qr-mobile"></div>
+        </div>
+      </div>
+      
+      <!-- 私密链接 -->
+      <div class="border rounded-lg p-4 md:p-6">
+        <h2 class="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4">私密链接</h2>
+        <p class="text-gray-600 text-sm mb-4">只有拥有此令牌的人才能访问表单</p>
+        
+        <div class="flex flex-col md:flex-row md:items-center space-y-2 md:space-y-0 md:space-x-4 mb-4">
+          <input
+            type="text"
+            value={@private_url}
+            readonly
+            class="flex-1 px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-sm touch-friendly"
+          />
+          <button
+            onclick="copyToClipboard(this, '<%= @private_url %>')"
+            class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm touch-friendly no-zoom"
+          >
+            复制链接
+          </button>
+        </div>
+        
+        <div class="flex flex-col md:flex-row md:items-center space-y-2 md:space-y-0 md:space-x-4 mb-4">
+          <p class="text-sm text-gray-600">如果令牌泄露，您可以重新生成一个新的令牌</p>
+          <button
+            onclick="regenerateToken()"
+            class="px-4 py-2 bg-yellow-600 text-white rounded-md hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 text-sm touch-friendly no-zoom"
+          >
+            重新生成令牌
+          </button>
+        </div>
+        
+        <div class="flex justify-center">
+          <div id="private-qr" class="qr-code qr-mobile"></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="mt-6 md:mt-8 pt-4 md:pt-6 border-t">
+      <a
+        href={~p"/forms"}
+        class="inline-flex items-center px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 text-sm touch-friendly no-zoom"
+      >
+        ← 返回表单列表
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // 生成二维码
+  document.addEventListener('DOMContentLoaded', function() {
+    if (typeof QRCode !== 'undefined') {
+      new QRCode(document.getElementById('public-qr'), {
+        text: '<%= @public_url %>',
+        width: 128,
+        height: 128
+      });
+      
+      new QRCode(document.getElementById('private-qr'), {
+        text: '<%= @private_url %>',
+        width: 128,
+        height: 128
+      });
+    }
+  });
+  
+  // 复制到剪贴板
+  function copyToClipboard(button, text) {
+    navigator.clipboard.writeText(text).then(function() {
+      const originalText = button.textContent;
+      button.textContent = '已复制';
+      button.classList.add('bg-green-600');
+      button.classList.remove('bg-blue-600');
+      
+      setTimeout(function() {
+        button.textContent = originalText;
+        button.classList.remove('bg-green-600');
+        button.classList.add('bg-blue-600');
+      }, 2000);
+    });
+  }
+  
+  // 重新生成令牌
+  function regenerateToken() {
+    if (confirm('确定要重新生成令牌吗？旧的令牌将失效。')) {
+      window.location.href = '<%= ~p"/forms/#{@form.id}/regenerate_token" %>';
+    }
+  }
+</script>

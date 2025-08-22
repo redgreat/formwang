@@ -1,0 +1,22 @@
+<div class="mx-auto max-w-sm">
+  <.header class="text-center">
+    管理员登录
+    <:subtitle>请输入您的邮箱和密码</:subtitle>
+  </.header>
+
+  <.simple_form for={%{}} as={:user} action={~p"/users/log_in"} phx-update="ignore">
+    <.error :if={@error_message}><%= @error_message %></.error>
+
+    <.input field={{:user, :email}} type="email" label="邮箱" required />
+    <.input field={{:user, :password}} type="password" label="密码" required />
+
+    <:actions>
+      <.input field={{:user, :remember_me}} type="checkbox" label="记住我" />
+    </:actions>
+    <:actions>
+      <.button phx-disable-with="登录中..." class="w-full">
+        登录 <span aria-hidden="true">→</span>
+      </.button>
+    </:actions>
+  </.simple_form>
+</div>

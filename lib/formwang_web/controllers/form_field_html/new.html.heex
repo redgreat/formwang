@@ -1,0 +1,51 @@
+<.header>
+  添加字段
+  <:subtitle>为表单 "<%= @form.title %>" 添加新字段</:subtitle>
+</.header>
+
+<.simple_form :let={f} for={@changeset} action={~p"/admin/forms/#{@form}/fields"}>
+  <.error :if={@changeset.action}>
+    表单中有错误，请检查下面的字段。
+  </.error>
+  
+  <.input field={f[:label]} type="text" label="字段标签" required />
+  
+  <.input 
+    field={f[:field_type]} 
+    type="select" 
+    label="字段类型" 
+    options={[
+      {"文本输入", "text"},
+      {"多行文本", "textarea"},
+      {"邮箱", "email"},
+      {"电话", "tel"},
+      {"数字", "number"},
+      {"日期", "date"},
+      {"时间", "time"},
+      {"单选框", "radio"},
+      {"复选框", "checkbox"},
+      {"下拉选择", "select"},
+      {"文件上传", "file"}
+    ]}
+    required
+  />
+  
+  <.input field={f[:placeholder]} type="text" label="占位符文本" />
+  
+  <.input field={f[:required]} type="checkbox" label="必填字段" />
+  
+  <.input field={f[:sort_order]} type="number" label="排序" value="1" />
+  
+  <div class="space-y-4">
+    <label class="block text-sm font-medium text-gray-700">选项设置</label>
+    <p class="text-sm text-gray-500">适用于单选框、复选框、下拉选择等字段类型，每行一个选项</p>
+    <.input field={f[:options]} type="textarea" placeholder="选项1&#10;选项2&#10;选项3" rows="4" />
+  </div>
+  
+  <:actions>
+    <.button>添加字段</.button>
+    <.link href={~p"/admin/forms/#{@form}"} class="ml-3">
+      <.button type="button" class="bg-gray-600 hover:bg-gray-700">取消</.button>
+    </.link>
+  </:actions>
+</.simple_form>

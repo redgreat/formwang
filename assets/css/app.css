@@ -1,0 +1,142 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* 移动端适配样式 */
+@import "./mobile.css";
+
+/* 自定义样式 */
+.form-container {
+  @apply bg-white rounded-lg shadow-sm p-6;
+}
+
+.form-field {
+  @apply mb-4;
+}
+
+.form-field label {
+  @apply block text-sm font-medium text-gray-700 mb-2;
+}
+
+.form-field input,
+.form-field textarea,
+.form-field select {
+  @apply w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500;
+}
+
+.form-field input[type="checkbox"],
+.form-field input[type="radio"] {
+  @apply w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500;
+}
+
+.btn {
+  @apply px-4 py-2 rounded-md font-medium transition-colors duration-200;
+}
+
+.btn-primary {
+  @apply bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500;
+}
+
+.btn-secondary {
+  @apply bg-gray-200 text-gray-800 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500;
+}
+
+.btn-danger {
+  @apply bg-red-600 text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500;
+}
+
+.alert {
+  @apply p-4 rounded-md mb-4;
+}
+
+.alert-success {
+  @apply bg-green-100 border border-green-400 text-green-700;
+}
+
+.alert-error {
+  @apply bg-red-100 border border-red-400 text-red-700;
+}
+
+.alert-warning {
+  @apply bg-yellow-100 border border-yellow-400 text-yellow-700;
+}
+
+.alert-info {
+  @apply bg-blue-100 border border-blue-400 text-blue-700;
+}
+
+/* 表格样式 */
+.table {
+  @apply min-w-full divide-y divide-gray-200;
+}
+
+.table th {
+  @apply px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider;
+}
+
+.table td {
+  @apply px-6 py-4 whitespace-nowrap text-sm text-gray-900;
+}
+
+/* 卡片样式 */
+.card {
+  @apply bg-white overflow-hidden shadow rounded-lg;
+}
+
+.card-header {
+  @apply px-4 py-5 sm:px-6 border-b border-gray-200;
+}
+
+.card-body {
+  @apply px-4 py-5 sm:p-6;
+}
+
+.card-footer {
+  @apply px-4 py-4 sm:px-6 border-t border-gray-200;
+}
+
+/* 导航样式 */
+.nav {
+  @apply flex space-x-8;
+}
+
+.nav-link {
+  @apply text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200;
+}
+
+.nav-link.active {
+  @apply text-blue-600 bg-blue-50;
+}
+
+/* 表单验证样式 */
+.field-error {
+  @apply border-red-300 focus:border-red-500 focus:ring-red-500;
+}
+
+.error-message {
+  @apply text-red-600 text-sm mt-1;
+}
+
+/* 加载动画 */
+.spinner {
+  @apply animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600;
+}
+
+/* 响应式隐藏/显示 */
+.hidden-mobile {
+  @apply block;
+}
+
+.visible-mobile {
+  @apply hidden;
+}
+
+@media (max-width: 768px) {
+  .hidden-mobile {
+    @apply hidden;
+  }
+  
+  .visible-mobile {
+    @apply block;
+  }
+}

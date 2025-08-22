@@ -1,0 +1,34 @@
+<.header>
+  编辑表单
+  <:subtitle>修改表单信息</:subtitle>
+</.header>
+
+<.simple_form :let={f} for={@changeset} action={~p"/admin/forms/#{@form}"}>
+  <.error :if={@changeset.action}>
+    表单中有错误，请检查下面的字段。
+  </.error>
+  
+  <.input field={f[:title]} type="text" label="表单标题" required />
+  <.input field={f[:description]} type="textarea" label="表单描述" />
+  <.input field={f[:slug]} type="text" label="URL Slug" />
+  
+  <.input 
+    field={f[:status]} 
+    type="select" 
+    label="状态" 
+    options={[{"草稿", "draft"}, {"已发布", "published"}]} 
+  />
+  
+  <:actions>
+    <.button>更新表单</.button>
+    <.link href={~p"/admin/forms/#{@form}"} class="ml-3">
+      <.button type="button" class="bg-gray-600 hover:bg-gray-700">取消</.button>
+    </.link>
+  </:actions>
+</.simple_form>
+
+<div class="mt-8">
+  <.link href={~p"/admin/forms/#{@form}"} method="delete" data-confirm="确定要删除这个表单吗？这个操作不能撤销。" class="text-red-600 hover:text-red-900">
+    删除表单
+  </.link>
+</div>
