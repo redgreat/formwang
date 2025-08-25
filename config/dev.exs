@@ -73,10 +73,10 @@ config :phoenix_live_view,
 
 # Database configuration
 config :formwang, Formwang.Repo,
-  username: "formwang",
-  password: "formwang123",
-  hostname: "localhost",
-  database: "formwang_dev",
+  username: "aaa",
+  password: "bbb",
+  hostname: "ccc",
+  database: "ddd",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10

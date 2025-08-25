@@ -15,6 +15,14 @@ defmodule Formwang.Forms do
     Repo.all(Form)
   end
 
+  @doc "获取所有已发布的表单"
+  def list_published_forms do
+    Form
+    |> where([f], f.status == :published)
+    |> order_by([f], desc: f.inserted_at)
+    |> Repo.all()
+  end
+
   @doc "根据用户获取表单列表"
   def list_forms_by_user(%User{} = user) do
     Form
@@ -170,7 +178,7 @@ defmodule Formwang.Forms do
   def get_form_submission!(id), do: Repo.get!(FormSubmission, id)
 
   @doc "创建表单提交记录"
-  def create_form_submission(attrs \\ %{}) do
+  def create_form_submission_direct(attrs \\ %{}) do
     %FormSubmission{}
     |> FormSubmission.changeset(attrs)
     |> Repo.insert()

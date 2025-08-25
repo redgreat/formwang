@@ -35,3 +35,11 @@ formwang-*.tar
 npm-debug.log
 /assets/node_modules/
 
+# Ignore prod.exs
+config/prod.exs
+
+# Ignore dev.exs
+config/dev.exs
+
+.env.local
+

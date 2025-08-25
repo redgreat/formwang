@@ -16,7 +16,7 @@
             class="flex-1 px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-sm touch-friendly"
           />
           <button
-            onclick="copyToClipboard(this, '<%= @public_url %>')"
+            onclick={"copyToClipboard(this, '#{@public_url}')"}
             class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm touch-friendly no-zoom"
           >
             复制链接
@@ -41,7 +41,7 @@
             class="flex-1 px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-sm touch-friendly"
           />
           <button
-            onclick="copyToClipboard(this, '<%= @private_url %>')"
+            onclick={"copyToClipboard(this, '#{@private_url}')"}
             class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm touch-friendly no-zoom"
           >
             复制链接

@@ -14,9 +14,9 @@ defmodule FormwangWeb.CoreComponents do
   Icons are provided by [Heroicons](https://heroicons.com). See `icon/1` for usage.
   """
   use Phoenix.Component
+  use Gettext, backend: FormwangWeb.Gettext
 
   alias Phoenix.LiveView.JS
-  import FormwangWeb.Gettext
 
   @doc """
   Renders a modal.
@@ -149,24 +149,24 @@ defmodule FormwangWeb.CoreComponents do
       <.flash kind={:info} title={gettext("Success!")} flash={@flash} />
       <.flash kind={:error} title={gettext("Error!")} flash={@flash} />
       <.flash
-        :if={live_flash(@flash, :info)}
+        :if={Phoenix.Flash.get(@flash, :info)}
         id="info"
         kind={:info}
         title={gettext("Success!")}
         phx-mounted={show("#info")}
         phx-click={JS.push("lv:clear-flash", value: %{key: :info}) |> hide("#info")}
       >
-        <%= live_flash(@flash, :info) %>
+        <%= Phoenix.Flash.get(@flash, :info) %>
       </.flash>
       <.flash
-        :if={live_flash(@flash, :error)}
+        :if={Phoenix.Flash.get(@flash, :error)}
         id="error"
         kind={:error}
         title={gettext("Error!")}
         phx-mounted={show("#error")}
         phx-click={JS.push("lv:clear-flash", value: %{key: :error}) |> hide("#error")}
       >
-        <%= live_flash(@flash, :error) %>
+        <%= Phoenix.Flash.get(@flash, :error) %>
       </.flash>
     </div>
     """

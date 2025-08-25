@@ -4,6 +4,12 @@ defmodule FormwangWeb.PublicFormController do
   alias Formwang.Forms
   alias Formwang.Forms.FormSubmission
 
+  # 表单列表页面
+  def index(conn, _params) do
+    forms = Forms.list_published_forms()
+    render(conn, :index, forms: forms)
+  end
+
   # 通过slug访问表单
   def show(conn, %{"slug" => slug}) do
     case Forms.get_form_by_slug(slug) do
@@ -46,7 +52,20 @@ defmodule FormwangWeb.PublicFormController do
     end
   end
 
-  # 提交表单
+  # 提交表单（新路由）
+  def submit_form(conn, %{"slug" => slug, "form_submission" => submission_params}) do
+    case Forms.get_form_by_slug(slug) do
+      nil ->
+        conn
+        |> put_flash(:error, "表单不存在")
+        |> redirect(to: "/")
+
+      form ->
+        submit_form_internal(conn, form, submission_params)
+    end
+  end
+
+  # 提交表单（旧路由兼容）
   def submit(conn, %{"slug" => slug, "form_submission" => submission_params}) do
     case Forms.get_form_by_slug(slug) do
       nil ->
@@ -55,7 +74,7 @@ defmodule FormwangWeb.PublicFormController do
         |> redirect(to: "/")
 
       form ->
-        submit_form(conn, form, submission_params)
+        submit_form_internal(conn, form, submission_params)
     end
   end
 
@@ -67,12 +86,12 @@ defmodule FormwangWeb.PublicFormController do
         |> redirect(to: "/")
 
       form ->
-        submit_form(conn, form, submission_params)
+        submit_form_internal(conn, form, submission_params)
     end
   end
 
   # 提交表单的私有函数
-  defp submit_form(conn, form, submission_params) do
+  defp submit_form_internal(conn, form, submission_params) do
     if form.status == :published do
       case Forms.create_form_submission(form, submission_params) do
         {:ok, _submission} ->

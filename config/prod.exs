@@ -18,10 +18,10 @@ config :logger, level: :info
 
 # Database configuration for production
 config :formwang, Formwang.Repo,
-  username: "formwang",
-  password: "formwang123",
-  hostname: "db",
-  database: "formwang_prod",
+  username: "aaa",
+  password: "bbb",
+  hostname: "ccc",
+  database: "ddd",
   pool_size: 10
 
 # Runtime production configuration, including reading

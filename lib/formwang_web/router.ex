@@ -17,11 +17,11 @@ defmodule FormwangWeb.Router do
     plug :accepts, ["json"]
   end
 
-  pipeline :require_authenticated_user do
+  pipeline :auth do
     plug :require_authenticated_user
   end
 
-  pipeline :redirect_if_user_is_authenticated do
+  pipeline :redirect_if_authenticated do
     plug :redirect_if_user_is_authenticated
   end
 
@@ -31,18 +31,21 @@ defmodule FormwangWeb.Router do
     get "/", PageController, :home
     
     # 公共表单访问路由
+    get "/forms", PublicFormController, :index
     get "/forms/:slug", PublicFormController, :show
-    post "/forms/:slug", PublicFormController, :submit
+    post "/forms/:slug/submit", PublicFormController, :submit_form
+    get "/forms/:slug/success", PublicFormController, :success
     get "/forms/token/:token", PublicFormController, :show_by_token
     post "/forms/token/:token", PublicFormController, :submit_by_token
   end
 
   # Authentication routes
   scope "/", FormwangWeb do
-    pipe_through [:browser, :redirect_if_user_is_authenticated]
+    pipe_through [:browser, :redirect_if_authenticated]
 
     get "/users/log_in", UserSessionController, :new
     post "/users/log_in", UserSessionController, :create
+    get "/admin/login", UserSessionController, :new
   end
 
   scope "/", FormwangWeb do
@@ -53,9 +56,11 @@ defmodule FormwangWeb.Router do
 
   # Admin routes
   scope "/admin", FormwangWeb do
-    pipe_through [:browser, :require_authenticated_user]
+    pipe_through [:browser, :auth]
 
     get "/", AdminController, :index
+    get "/submissions", AdminController, :submissions
+    get "/settings", AdminController, :settings
     
     resources "/forms", FormController do
       resources "/fields", FormFieldController, except: [:index]
